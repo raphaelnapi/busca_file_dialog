@@ -26,3 +26,4 @@ python3 busca_file_dialog -file url_list_filepath
 ```
 
 ## Exemplo de uso
+![](img/busca_file_dialog_mini.png)
