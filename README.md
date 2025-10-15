@@ -6,12 +6,15 @@ O busca_file_dialog.py procura pela tag <input type="file"> para identificar se 
 
 ## Uso
 ```
+# Uso simples:
 python3 busca_file_dialog -u http://example_url
 
+# Uso com PHPSESSID:
 python3 busca_file_dialog -u http://example_url -phpsessid xxxxxxxxx
 
+# Uso com lista de URL em arquivo:
 python3 busca_file_dialog -list url_list_filepath
-
+# ou
 python3 busca_file_dialog -file url_list_filepath
 ```
 
