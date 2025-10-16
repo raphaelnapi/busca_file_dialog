@@ -105,13 +105,15 @@ def busca_file_dialog(url):
 	else:
 		print(Fore.RED + 'Não possui FileDialog' + Style.RESET_ALL)
 
-trata_argumentos()
 
-if url_inicial != "":
-	busca_file_dialog(url_inicial)
+if __name__ == '__main__':
+	trata_argumentos()
 
-for url in urls_para_visitar:
-	try:
-		busca_file_dialog(url)
-	except:
-		continue
+	if url_inicial != "":
+		busca_file_dialog(url_inicial)
+
+	for url in urls_para_visitar:
+		try:
+			busca_file_dialog(url)
+		except:
+			continue
