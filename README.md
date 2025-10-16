@@ -1,5 +1,8 @@
 # busca_file_dialog.py
-Script escrito em Python para identificar páginas com FileDialog para upload de arquivos em aplicações Web.
+Web Crawler escrito em Python para identificar páginas com FileDialog para upload de arquivos em aplicações Web.
+Utilizado para enumeração de páginas com potencial para Local File Inclusion (LFI)
+
+![](img/busca_file_dialog_video.gif)
 
 ## Descrição
 O busca_file_dialog.py procura pela tag input type="file" para identificar se a página tem potencial para fazer upload de arquivos. Caso encontre outros links na página com extensões: .js, .php, .html, .asp  ou .aspx ele verifica a página dos links encontrados recursivamente.
