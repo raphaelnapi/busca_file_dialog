@@ -2,7 +2,7 @@
 Script escrito em Python para identificar páginas com FileDialog para upload de arquivos em aplicações Web.
 
 ## Descrição
-O busca_file_dialog.py procura pela tag <input type="file"> para identificar se a página tem potencial para fazer upload de arquivos. Caso encontre outros links na página com extensões: .js, .php, .html, .asp  ou .aspx ele verifica a página dos links encontrados recursivamente.
+O busca_file_dialog.py procura pela tag input type="file" para identificar se a página tem potencial para fazer upload de arquivos. Caso encontre outros links na página com extensões: .js, .php, .html, .asp  ou .aspx ele verifica a página dos links encontrados recursivamente.
 
 ## Uso
 ```
