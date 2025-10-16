@@ -10,18 +10,21 @@ urls_visitadas = []
 
 url_inicial = ''
 phpsessid = ''
+netloc = ""
 
-extensoes = ['.js', '.php', '.html', '.asp', '.aspx']
+excludentes = []
 
 def trata_argumentos():
 	global url_inicial
 	global url_para_visitar
 	global phpsessid
+	global netloc
 	wordlist_file = ''
 
 	for i in range(1, len(sys.argv)):
 		if sys.argv[i] == '-u':
 			url_inicial = sys.argv[i + 1]
+			netloc = urlparse(url_inicial).netloc
 			i = i + 1
 		elif sys.argv[i] == '-list' or sys.argv[i] == '-file':
 			wordlist_file = sys.argv[i + 1]
@@ -43,7 +46,7 @@ def trata_argumentos():
 		sys.exit(0)
 
 def help():
-	print('busca_file_dialog.py')
+	print('busca_file_dialog.py    1.2')
 	print('Script escrito em Python para identificar páginas com FileDialog (<input type=\"file\") em uma aplicação Web.')
 	print()
 	print('Uso:')
@@ -73,7 +76,7 @@ def busca_file_dialog(url):
 	if phpsessid != '':
 		cookies['PHPSESSID'] = phpsessid
 
-	response = requests.get(url, cookies=cookies)
+	response = requests.get(url, cookies=cookies, headers={"Accept-Encoding": "identity"})
 	soup = BeautifulSoup(response.text, 'html.parser')
 
 	a_list = soup.find_all('a')
@@ -82,14 +85,19 @@ def busca_file_dialog(url):
 		if uri_relativa == None:
 			continue
 
-		if any(ext in uri_relativa[-4:] for ext in extensoes):
-			parsed = urlparse(response.url)
-			uri_path = os.path.dirname(parsed.path)
-			uri_relativa = f'{uri_path}/{uri_relativa}'
-			raiz = f"{parsed.scheme}://{parsed.netloc}"
-			nova_url = urljoin(raiz, uri_relativa)
-			if not nova_url in urls_para_visitar:
-				urls_para_visitar.append(nova_url)
+		#remove excludentes
+		if any(exc in uri_relativa  for exc in excludentes):
+			continue
+
+		nova_url = urljoin(response.url, uri_relativa)
+		
+		#remove URL fora do dominio
+		target_netloc = urlparse(nova_url).netloc
+		if target_netloc != netloc:
+			continue
+
+		if not nova_url in urls_para_visitar:
+			urls_para_visitar.append(nova_url)
 
 	print(f'{url:<50}\t', end='')
 	if 'type="file"' in response.text:
